@@ -1,0 +1,24 @@
+set "This program returns fibonacci number of given index. Enter index:" 500
+disp 500
+read 1000
+set "Illegal index. Try again." 501
+set 0 1004
+comp 1000 1004
+jmp- 76
+set 1 997
+set 1 999
+set 2 998
+set 1 1001
+set 1 1002
+set 3 1003
+comp 1000 1003
+jmp- 73
+sum 998 997 998
+sum 1001 1002 999
+copy 1002 1001
+copy 999 1002
+comp 998 1000
+jmp- 54
+disp 999
+exit
+disp 501

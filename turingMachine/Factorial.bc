@@ -1,0 +1,19 @@
+set "This program returns factorial for given number. Enter number:" 500
+disp 500
+read 1000
+set "Illegal number. Try again." 501
+set 0 1004
+comp 1000 1004
+jmp- 60
+set 1 1001
+set 1 999
+comp 1000 1001
+jmp- 57
+mult 999 1000 999
+sub 1000 1001 1003
+copy 1003 1000
+comp 1001 1000
+jmp- 41
+disp 999
+exit
+disp 501

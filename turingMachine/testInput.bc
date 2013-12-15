@@ -1,0 +1,3 @@
+set "Hello world!" 1000
+disp 1000
+exit

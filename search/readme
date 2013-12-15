@@ -1,0 +1,32 @@
+NAME
+
+search.js - return indexes and amount of occurences of pattern substring in given text file.
+		 	Also display time of execution, amount of collisions (for hash) and stateTable (for FSH).
+
+SYNOPSIS
+
+cscript search.js [mode] [inputFileName] [pattern]
+
+modes:
+
+hash - Rabin - Carp algorithm
+
+BM - Boyer - Moore algorithm
+
+FSM - Aho - Corasick algorithm
+
+DESCRIPTION
+
+There is no need in additional description.
+
+AUTHOR
+
+Written by Timofey Yefimov.
+
+COPYRIGHT
+
+It's free.
+
+SEE ALSO
+
+There is no additional information about search.js yet.

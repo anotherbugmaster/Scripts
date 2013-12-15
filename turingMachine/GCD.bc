@@ -1,0 +1,38 @@
+set "This program returns GCD of given numbers. Enter numbers:" 500
+disp 500
+set "Illegal numbers. Try again." 501
+set 0 1004
+set -1 1005
+read 1000
+read 1001
+comp 1000 1004
+jmp+ 44
+mult 1000 1005 1000
+comp 1000 1004
+jmp0 60
+comp 1001 1004
+jmp+ 58
+mult 1001 1005 1001
+comp 1001 1004
+jmp0 60
+jmp 80
+comp 1000 1001
+jmp0 111
+sum 1000 1001 1001
+comp 1001 1004
+jmp+ 78
+mult 1001 1005 1001
+jmp 108
+set 0 998
+comp 1000 1001
+jmp+ 97
+copy 1000 1003
+copy 1001 1000
+copy 1003 1001
+sub 1000 1001 1000
+comp 1000 998
+jmp0 108
+jmp 83
+disp 1001
+exit
+disp 501

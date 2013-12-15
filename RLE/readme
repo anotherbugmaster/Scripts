@@ -1,0 +1,35 @@
+NAME
+
+RLE.js - simple Run-Length encoder and decoder.
+
+SYNOPSIS
+
+cscript RLE.js [encodingType] [mode] [inputFileName] [outputFileName]
+
+encoding types:
+
+escape - Escape-symbol heuristic
+
+jump - Jump heuristic
+
+modes:
+
+encode
+
+decode
+
+DESCRIPTION
+
+There is no need in additional description.
+
+AUTHOR
+
+Written by Timofey Yefimov.
+
+COPYRIGHT
+
+It's free.
+
+SEE ALSO
+
+There is no additional information about RLE.js yet.

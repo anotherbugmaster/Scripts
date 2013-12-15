@@ -1,0 +1,244 @@
+ÿÂfunction HandleExceptions(arguments)
+{
+	if (arguments.length < 4 | arguments(0) =Œ "/?" )
+	{
+	œWSH.stdout.WriteLine(helÿp);
+	WSH.stdout.WriteLine(usage);
+	ÿWSH.Quit();
+	}
+}
+
+function GetCodeFromChar(character)
+{
+	for(var charNumber = 0; ÿcharNumber < ansiTable.length; charNumber+‚)
+	 if (ansiTable.charAt(charNumber) =Œ character)
+	return charNumber;
+	returÿn nulÑ;
+}
+
+function GetCharFromCode(charCode)
+{
+	if (charCode < ansiTable.length)
+	ªreturn ansiTable.charAt(charCode);
+ÿ	else
+	ˆreturn nul²;
+}
+
+function ReadEncoding()
+{
+	var encodingCur¼ent = fso.OpenTextFile("ansi.txt", 1);
+	var encodinÿgTable = "’;
+	if (!encodingCur“ent.atEndOfStream)
+	™encodingTable = encodingCurˆent.ReadAl();
+	encodingCurÿent.close()ÿ;
+	return encodingTable;
+}
+
+function ReadInput(arguments)
+{
+	var input = fso.OpenTextFile(arguments(2), 1);
+	var inputStÿring = ";
+	if (!input.atEndOfStream)
+	˜inputString = input.ReadAlæ();
+	input.close();
+	return inputString;
+}
+
+functioÿn EscapeEncoding()
+{
+	if (inputString.length =„ 0)
+	†return "ÿ;
+	var outputString = inputString.charAt(0);
+	var charNumbÿer = 1;
+	var charCounter = 1;
+	while (charNumber < inputString.len‰gth)
+	{
+	³var lastChar = inputString.charAt(charNumber -ÿ 1);
+	…var curªentChar = inputString.charAt(charNumber);
+	¡WSH.stdout.WriteLine(lastChar + curŠentChar);
+	‘if (lastChar ÿ!= cur‡entChar |Œ charCounter =† 256)
+	‚{
+	•if (charCounter > 1)
+	‚{
+	½outputString += lastChar + GetCharFromCode(chaÿrCounter - 1);
+	‘charCounter = 1;
+	‚}
+	‘outputString += cur‰entChar;
+	¢WSH.stdout.WriteLine(charNumber);
+	‚}
+	…elseÿ
+	‚{
+	ŠcharCounter+‚;
+	if (charNumber =™ inputString.length - 1)
+	½outputString += lastChar + GetCharFromCode(charCouÿnter - 1);
+	‚}
+	‰charNumber+Ø;
+	}
+	return outputString;
+}
+
+function EscapeDecoding()
+{
+	if (inputString.length =„ 0ÿ)
+	†return "ÿ;
+	var outputString = inputString.charAt(0);
+	var charNumber = 1;
+	var charCounter = 0;
+	while (charNumber <ÿ inputString.len‰gth)
+	{
+	³var lastChar = inputString.charAt(charNumber - 1);
+	…var curªentChar = inputString.charAt(charNÿumber);
+	Œif (lastChar =‚ cur‰entChar)
+	‚{
+	‰charNumber+‚;
+	ºcharCounter = GetCodeFromChar(inputString.charAt(charNumÿber)† + 1;
+	¹for (var charIndex = 1; charIndex < charCounter; charIndex+‚)
+	‘outputString += cur‰entChar;
+	‰charNumberÿ+‚;
+	¥if (charNumber < inputString.length)
+	°outputString += inputString.charAt(charNumber);
+	‘charCounter = 0;
+	‚}
+	…ÿelse
+	‚{
+	‘outputString += cur‰entChar;
+	‚}
+	‰charNumber+Ö;
+	}
+	return outputString;
+}
+
+function JumpEncoding()
+ÿ{
+	if (inputString.length =„ 0)
+	†return "–;
+	var outputString = "‰;
+	var difÕSymbols = inputString.charAt(0);
+	var chÿarNumber = 1;
+	var charCounter = 1;
+	var dif¥Counter = 1;
+	if (inputString.length =„ 1)
+	¨outputString += GetCharFromCodeÿ(128) + dif·Symbols;
+	while (charNumber < inputString.length)
+	{
+	³var lastChar = inputString.charAt(charNumber - 1);
+	…vÿar cur¬entChar = inputString.charAt(charNumber);
+
+	Œif (lastChar =‚ cur‰entChar)
+	‚{
+	/WSH.stdout.WriteLine("same");ÿ
+	…if (difCounter > 0)
+	‚{
+	dif†Counter-‚;
+	…if (dif”Symbols.length > 1)
+	¡outputString += GetCharFromCode(dif–ÿCounter - 1 + 128) + dif“Symbols.substr(0, dif•Symbols.length - 1);
+	difCounter = 0;
+	difˆSymbols = "‚;
+	‚}
+	ŠcÿharCounter+‚;
+	if (charCounter =„ 128 |‹ charNumber =™ inputString.length - 1)
+	‚{
+	/¡WSH.stdout.WriteLine("sameEnd"ÿ);
+	/ÃWSH.stdout.WriteLine(GetCodeFromChar(GetCharFromCode(charCounter - 1)‚;
+	½outputString += GetCharFromCode(charCounteÿr - 1) + lastChar;
+	dif›Symbols = inputString.charAt(§charNumber + 1) % inputString.length);
+	‘charCounter = 1;
+	difÿCounter = 1;
+	‰charNumber+‚;
+	‚}
+	‚}
+	–else if (lastChar != cur‰entChar)
+	‚{
+	/—WSH.stdout.WriteLine("dif„");
+ÿ	•if (charCounter > 1)
+	‚{
+	½outputString += GetCharFromCode(charCounter - 1) + lastChar;
+	‘charCounter = 1;
+	‚}
+	diÿf†Counter+‚;
+	difŒSymbols += cur‰entChar;
+	…if (dif‡Counter =„ 128 |‹ charNumber =™ inputString.length - 1)
+	‚{
+ÿ	/—WSH.stdout.WriteLine("dif‡End");
+	¡outputString += GetCharFromCode(dif–Counter - 1 + 128) + dif‰Symbols;
+	dif›Symboÿls = inputString.charAt(§charNumber + 1) % inputString.length);
+	‘charCounter = 1;
+	difCounter = 1;
+	‰charNumber+‚;
+ÿ	‚}
+	„}
+
+	‰charNumber+„;
+
+	/§WSH.stdout.WriteLine(lastChar + " " + cur¥entChar + " " + charCounter + " " + difÚCounÿter);
+	}
+	return outputString;
+}
+
+function JumpDecoding()
+{
+	var outputString = "İ;
+	var charNumber = 0;
+	var charCounÿter = 0;
+	while (charNumber < inputString.length)
+	{
+	/¼WSH.stdout.Write(inputString.charCodeAt(charNumber) + " ");
+	¾chaÿrCounterCode = GetCodeFromChar(inputString.charAt(charNumber)‚;
+	…var cur®entChar = inputString.charAt(charNumber + 1);
+	›ÿif (charCounterCode < 128)
+	‚{
+	£charCounter = charCounterCode + 1;
+	Áfor(var symbolNumber = 0; symbolNumber < charCounterÿ; symbolNumber+‚)
+	‚{
+	‘outputString += cur‰entChar;
+	‚}
+	‰charNumber+‚;
+	‚}
+	…else
+	‚{
+	¥charCounter = charCÿounterCode - 127;
+	Áfor(var symbolNumber = 0; symbolNumber < charCounter; symbolNumber+‚)
+	‚{
+	‘outputString += cur‰entCÿhar;
+	‰charNumber+‚;
+	cur®entChar = inputString.charAt(charNumber + 1);
+	‚}
+	‚}
+	‰charNumber+ÿ;
+	}
+	return outpuÿtString;
+}
+
+var arguments = WSH.Arguments;
+var fso = new ActiveXObject("Scripting.FileSystemObject");
+vÿar help = "RLE.js -ÿ simple encoder and decoder."
+var usage = "Usage: cscript RLE.js type operation input output";
+
+var ansiTaÿble = ReadEncodingÿ();
+HandleExceptions(arguments);
+var inputString = ReadInput(arguments);
+
+var output = fso.OpenTextFile(arÊguments(3), 2);
+ÿ
+var opType = arguments(0).concat(" ").concat(arguments(1)°;
+
+switch (opType)
+{
+	case "escape encode":
+	›output.Write(EsÿcapeEncoding()‚;
+	Ÿbreak;
+	case "escape decode":
+	›output.Write(EscapeDecoding()‚;
+	break;
+	case "jump encode":
+	™oÿutput.Write(JumpEncoding()‚;
+	break;
+	case "jump decode":
+	™output.Write(JumpDecoding()‚;
+	’break;
+	default:
+	™WSH.´stdout.Write(usage);
+	›break;
+}
+
+output.close();
